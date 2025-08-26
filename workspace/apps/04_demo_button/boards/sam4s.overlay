@@ -1,0 +1,15 @@
+/ {
+    aliases {
+        my-button = &button_1;
+    };
+
+    buttons {
+        compatible = "gpio-keys";
+        debounce-interval-ms = <50>;
+        polling-mode;
+
+        button_1: d5 {
+            gpios = <&pioa 2 (GPIO_ACTIVE_HIGH | GPIO_PULL_UP)>;
+        };
+    };
+};

@@ -1,13 +1,26 @@
 /* https://docs.zephyrproject.org/latest/build/dts/intro-syntax-structure.html */
 / {
     aliases {
-        my-led = &led0;
+        indicator-led = &indicator_led;
+        r-led = &r_led;
+        g-led = &g_led;
+        b-led = &b_led;
     };
 
 	leds {
         compatible = "gpio-leds";
-        led0: d13 {
-            gpios = <&pioc 10 GPIO_ACTIVE_LOW>;
+        indicator_led: indicator_led {
+            gpios = <&pioc 18 GPIO_ACTIVE_LOW>;
         };
+        r_led: r_led {
+            gpios = <&pioc 19 GPIO_ACTIVE_LOW>;
+        };
+        g_led: g_led {
+            gpios = <&pioc 20 GPIO_ACTIVE_LOW>;
+        };
+        b_led: b_led {
+            gpios = <&pioc 21 GPIO_ACTIVE_LOW>;
+        };
+
     };
 };
