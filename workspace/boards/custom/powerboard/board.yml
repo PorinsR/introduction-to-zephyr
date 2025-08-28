@@ -1,0 +1,6 @@
+board:
+  name: powerboard
+  full_name: G360 Powerboard
+  vendor: atmel
+  socs:
+    - name: sam4s8c

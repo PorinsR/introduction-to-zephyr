@@ -1,7 +1,7 @@
 {
-  "name": "Zephyr Development Environment for Espressif",
+  "name": "Zephyr Development Environment for SAM4S",
   "build": {
-    "dockerfile": "../Dockerfile.espressif",
+    "dockerfile": "../Dockerfile.sam4s",
     "context": ".."
   },
   "customizations": {
