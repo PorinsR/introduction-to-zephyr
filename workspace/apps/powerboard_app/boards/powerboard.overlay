@@ -1,0 +1,75 @@
+/* https: //docs.zephyrproject.org/latest/build/dts/intro-syntax-structure.html */
+/ {
+    aliases {
+        indicator-led = &indicator_led;
+        r-led = &r_led;
+        g-led = &g_led;
+        b-led = &b_led;
+    };
+
+    leds {
+        compatible = "gpio-leds";
+        indicator_led: indicator_led {
+            gpios = <&pioc 18 GPIO_ACTIVE_LOW>;
+        };
+        r_led: r_led {
+            gpios = <&pioc 19 GPIO_ACTIVE_LOW>;
+        };
+        g_led: g_led {
+            gpios = <&pioc 20 GPIO_ACTIVE_LOW>;
+        };
+        b_led: b_led {
+            gpios = <&pioc 21 GPIO_ACTIVE_LOW>;
+        };
+
+    };
+};
+
+// Enable TWI0 and add TCA954x I2C extender
+&twi0 {
+    pinctrl-0 = <&twi0_default>;                         // Use the custom pin configuration
+    status = "okay";                                         // Enable I2C0 interface
+
+    mux: tca9546a@70 {
+        compatible = "ti,tca9546a";
+        reg = <0x70>;
+        status = "okay";
+        label = "i2c_mux";
+        #address-cells = <1>;
+        #size-cells = <0>;
+        reset-gpios = <&pioc 16 GPIO_ACTIVE_LOW>;
+
+        ch0: mux_i2c@0 {
+            label = "mux_dw_0";
+            reg = <0>;
+            status = "okay";
+            #address-cells = <1>;
+            #size-cells = <0>;
+            compatible = "ti,tca9546a-channel";
+
+            max17262@36 {
+                compatible = "maxim,max17262";
+                reg = <0x36>;
+                design-voltage = <3600>;
+                desired-voltage = <3600>;
+                desired-charging-current = <2000>;
+                design-cap = <17000>;
+                empty-voltage = <3300>;
+                recovery-voltage = <3880>;
+                charge-voltage = <3600>;
+                status = "okay";
+            };
+        };
+
+        /*
+        ch1: mux_i2c@1 {
+            label = "mux_dw_1";
+            reg = <1>;
+            status = "okay";
+            #address-cells = <1>;
+            #size-cells = <0>;
+            compatible = "ti,tca9546a-channel";
+        };
+         */
+    };
+};

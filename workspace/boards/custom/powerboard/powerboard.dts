@@ -12,7 +12,7 @@
 
 / {
 	model = "G360 Powerboard with ATSAM4S8C";
-	compatible = "atmel,sam4s_xplained", "atmel,sam4s16c", "atmel,sam4s";
+	compatible = "atmel,sam4s8c", "atmel,sam4s";
 
 	aliases {
 		indicator-led = &indicator_led;
