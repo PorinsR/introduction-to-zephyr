@@ -8,11 +8,17 @@ static const int32_t sleep_time_ms = 1000;
 
 int main(void)
 {
-    const struct device *const dev = DEVICE_DT_GET_ONE(maxim_max17262);
+    const struct device *const fuel_gauge = DEVICE_DT_GET_ONE(maxim_max17262);
+    const struct device *const encoder = DEVICE_DT_GET_ONE(ams_as5600);
 
-    if (!device_is_ready(dev))
+    if (!device_is_ready(fuel_gauge))
     {
-        printk("sensor: device not ready.\n");
+        printk("fuel gauge: device not ready.\n");
+        return 0;
+    }
+    if (!device_is_ready(encoder))
+    {
+        printk("encoder: device not ready.\n");
         return 0;
     }
 
@@ -21,11 +27,11 @@ int main(void)
         struct sensor_value voltage, avg_current, temperature;
         float i_avg;
 
-        sensor_sample_fetch(dev);
-        sensor_channel_get(dev, SENSOR_CHAN_GAUGE_VOLTAGE, &voltage);
-        sensor_channel_get(dev, SENSOR_CHAN_GAUGE_AVG_CURRENT,
+        sensor_sample_fetch(fuel_gauge);
+        sensor_channel_get(fuel_gauge, SENSOR_CHAN_GAUGE_VOLTAGE, &voltage);
+        sensor_channel_get(fuel_gauge, SENSOR_CHAN_GAUGE_AVG_CURRENT,
                            &avg_current);
-        sensor_channel_get(dev, SENSOR_CHAN_GAUGE_TEMP, &temperature);
+        sensor_channel_get(fuel_gauge, SENSOR_CHAN_GAUGE_TEMP, &temperature);
 
         i_avg = avg_current.val1 + (avg_current.val2 / 1000000.0);
 
