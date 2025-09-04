@@ -75,7 +75,8 @@ RUN apt-get -y update && \
     vim \
     nano \
     mc \
-    openssh-server
+    openssh-server \
+    usbutils
 
 # Set root password
 RUN echo "root:${PASSWORD}" | chpasswd

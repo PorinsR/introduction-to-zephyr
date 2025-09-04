@@ -4,6 +4,9 @@
     "dockerfile": "../Dockerfile.sam4s",
     "context": ".."
   },
+  "mounts": [
+    "source=/dev/bus/usb,target=/dev/bus/usb,type=bind" // USB support for ST-Link
+  ],
   "customizations": {
     "vscode": {
       "extensions": [
@@ -26,12 +29,17 @@
     "Zephyr-Introduction",
     "--rm",
     "-it",
+    "--privileged",
     "-p",
     "2222:22",
     "-p",
     "3333:3333",
     "-p",
-    "8800:8800"
+    "8800:8800",
+    "--security-opt=seccomp=unconfined",
+    "--device=/dev/bus/usb",
+    "--group-add=plugdev",
+    "--group-add=dialout"
   ],
   "remoteUser": "root"
 }
