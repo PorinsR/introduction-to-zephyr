@@ -7,7 +7,9 @@
         r-led = &r_led;
         g-led = &g_led;
         b-led = &b_led;
-        usbc-port0 = &port0;
+        display-backlight= &display_backlight;
+        enable12v= &load_switch;
+        // usbc-port0 = &port0;
     };
 
     leds {
@@ -24,25 +26,64 @@
         b_led: b_led {
             gpios = <&pioc 21 GPIO_ACTIVE_LOW>;
         };
-
-    };
-    fvbus: fusb302b-vbus {
-        compatible = "fcs,fusb302b-vbus";
-        fusb302b = <&fusb>;
-    };
-    ports {
-        #address-cells = <1>;
-        #size-cells = <0>;
-        port0: usbc-port@0 {
-            compatible = "usb-c-connector";
-            reg = <0>;
-            tcpc = <&fusb>;
-            vbus = <&fvbus>;
-            power-role = "sink";
-            sink-pdos = <PDO_FIXED(9000, 100, 0) PDO_FIXED(5000, 100, 0) PDO_FIXED(15000, 100, 0) PDO_FIXED(20000, 100, 0)>;
+        display_backlight: display_backlight{
+            gpios = <&pioa 23 GPIO_ACTIVE_LOW>;
+        };
+        load_switch: load_switch {
+            gpios = <&pioa 7 GPIO_ACTIVE_HIGH>;
         };
     };
+
+
+
+    // fvbus: fusb302b-vbus {
+        //     compatible = "fcs,fusb302b-vbus";
+        //     fusb302b = <&fusb>;
+    // };
+    // ports {
+        //     #address-cells = <1>;
+        //     #size-cells = <0>;
+        //     port0: usbc-port@0 {
+            //         compatible = "usb-c-connector";
+            //         reg = <0>;
+            //         tcpc = <&fusb>;
+            //         vbus = <&fvbus>;
+            //         power-role = "sink";
+            //         sink-pdos = <PDO_FIXED(9000, 100, 0) PDO_FIXED(5000, 100, 0) PDO_FIXED(15000, 100, 0) PDO_FIXED(20000, 100, 0)>;
+        //     };
+    // };
+    // ports {
+        //     #address-cells = <1>;
+        //     #size-cells = <0>;
+        //     port0: usbc-port@0 {
+            //         compatible = "usb-c-connector";
+            //         reg = <0>;
+            //         tcpc = <&fusb307_tcpc0>;
+            //         vbus = <&fusb307_vbus0>;
+            //         power-role = "sink";
+            //         sink-pdos = <PDO_FIXED(12000, 1000, 0)>;
+        //     };
+    // };
+    mipi_dbi {
+        compatible = "zephyr,mipi-dbi-spi";
+        reset-gpios = <&pioc 7 GPIO_ACTIVE_LOW>;
+        // dc-gpios = <&pioa 12 GPIO_ACTIVE_HIGH>;
+        spi-dev = <&spi0>;
+        #address-cells = <1>;
+        #size-cells = <0>;
+
+        ili9340: ili9340@0 {
+            compatible = "ilitek,ili9340";
+            reg = <0>;
+            mipi-max-frequency = <8000000>;
+            rotation = <270>;
+            width = <320>;
+            height = <240>;
+        };
+    };
+
 };
+
 
 // Enable TWI0 and add TCA954x I2C extender
 &twi0 {
@@ -53,13 +94,13 @@
         compatible = "ti,tca9546a";
         reg = <0x70>;
         status = "okay";
-        label = "i2c_mux";
+        // label = "i2c_mux";
         #address-cells = <1>;
         #size-cells = <0>;
         reset-gpios = <&pioc 16 GPIO_ACTIVE_LOW>;
 
         ch0: mux_i2c@0 {
-            label = "mux_dw_0";
+            // label = "mux_dw_0";
             reg = <0>;
             status = "okay";
             #address-cells = <1>;
@@ -78,16 +119,26 @@
                 charge-voltage = <3600>;
                 status = "okay";
             };
-            fusb: fusb302b@25 {
-                compatible = "fcs,fusb302b";
-                status = "okay";
-                reg = <0x25>;
-            };
+            // fusb307_tcpc0: fusb307_tcpc0@50 {
+                //     compatible = "onnn,fusb307-tcpc";
+                //     reg = <0x50>;
+                //     irq-gpios = <&pioc 2 GPIO_ACTIVE_LOW>;
+                //     status = "okay";
+                //     fusb307_vbus0: fusb307_vbus0 {
+                    //         compatible = "zephyr,usb-c-vbus-tcpci";
+                    //         status = "okay";
+                //     };
+            // };
+            // fusb: fusb302b@25 {
+                //     compatible = "fcs,fusb302b";
+                //     status = "okay";
+                //     reg = <0x25>;
+            // };
         };
 
 
         ch1: mux_i2c@1 {
-            label = "mux_dw_1";
+            // label = "mux_dw_1";
             reg = <1>;
             status = "okay";
             #address-cells = <1>;
@@ -101,3 +152,6 @@
 
     };
 };
+
+
+
