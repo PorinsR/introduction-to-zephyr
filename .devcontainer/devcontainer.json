@@ -4,9 +4,9 @@
     "dockerfile": "../Dockerfile.sam4s",
     "context": ".."
   },
-  "mounts": [
-    "source=/dev/bus/usb,target=/dev/bus/usb,type=bind" // USB support for ST-Link
-  ],
+  // "mounts": [
+  //   "source=/dev/bus/usb,target=/dev/bus/usb,type=bind" // USB support for ST-Link
+  // ],
   "customizations": {
     "vscode": {
       "extensions": [

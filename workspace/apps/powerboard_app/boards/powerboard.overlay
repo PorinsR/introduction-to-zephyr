@@ -72,8 +72,8 @@
         #address-cells = <1>;
         #size-cells = <0>;
 
-        ili9340: ili9340@0 {
-            compatible = "ilitek,ili9340";
+        ili9806: ili9806@0 {
+            compatible = "ilitek,ili9806";
             reg = <0>;
             mipi-max-frequency = <8000000>;
             rotation = <270>;
