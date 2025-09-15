@@ -48,27 +48,25 @@
             status = "okay";
             reg = <0>;
             mipi-max-frequency = <16000000>;
-            // mipi-mode = <MIPI_DBI_MODE_SPI_3WIRE>;
+            mipi-mode = <1>;
             rotation = <270>;
             width = <800>;
             height = <480>;
         };
+        // ili9806: ili9806@0 {
+            //     compatible = "ilitek,ili9806";
+            //     status = "okay";
+            //     reg = <0>;
+            //     mipi-max-frequency = <16000000>;
+            //     mipi-mode = <1>;
+            //     rotation = <270>;
+            //     width = <800>;
+            //     height = <480>;
+        // };
     };
 
 };
 
-// &spi0 {
-    //     ili9340: ili9340@0 {
-        //         compatible = "ilitek,ili9340";
-        //         status = "okay";
-        //         reg = <0>;
-        //         // mipi-max-frequency = <16000000>;
-        //         // mipi-mode = <MIPI_DBI_MODE_SPI_3WIRE>;
-        //         rotation = <270>;
-        //         width = <800>;
-        //         height = <480>;
-    //     };
-// };
 
 // Enable TWI0 and add TCA954x I2C extender
 &twi0 {

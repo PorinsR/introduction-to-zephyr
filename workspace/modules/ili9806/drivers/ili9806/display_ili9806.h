@@ -31,9 +31,9 @@
 #define ILI9806_NGAMCTRL_LEN 15U
 
 /** X resolution (pixels). */
-#define ILI9806_X_RES 240U
+#define ILI9806_X_RES 480U
 /** Y resolution (pixels). */
-#define ILI9806_Y_RES 320U
+#define ILI9806_Y_RES 800U
 
 /** ILI9806 registers to be initialized. */
 struct ili9806_regs {
