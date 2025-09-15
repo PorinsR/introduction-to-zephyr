@@ -3,7 +3,7 @@
 #include <dt-bindings/usb-c/pd.h>
 / {
     chosen {
-        zephyr,display = &ili9340;
+        zephyr,display = &ili9806;
     };
     aliases {
         indicator-led = &indicator_led;
@@ -43,18 +43,8 @@
         spi-dev = <&spi0>;
         #address-cells = <1>;
         #size-cells = <0>;
-        ili9340: ili9340@0 {
-            compatible = "ilitek,ili9340";
-            status = "okay";
-            reg = <0>;
-            mipi-max-frequency = <16000000>;
-            mipi-mode = <1>;
-            rotation = <270>;
-            width = <800>;
-            height = <480>;
-        };
-        // ili9806: ili9806@0 {
-            //     compatible = "ilitek,ili9806";
+        // ili9340: ili9340@0 {
+            //     compatible = "ilitek,ili9340";
             //     status = "okay";
             //     reg = <0>;
             //     mipi-max-frequency = <16000000>;
@@ -63,6 +53,16 @@
             //     width = <800>;
             //     height = <480>;
         // };
+        ili9806: ili9806@0 {
+            compatible = "ilitek,ili9806";
+            status = "okay";
+            reg = <0>;
+            mipi-max-frequency = <16000000>;
+            mipi-mode = <1>;
+            rotation = <270>;
+            width = <800>;
+            height = <480>;
+        };
     };
 
 };

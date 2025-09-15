@@ -1,6 +1,0 @@
-name: ili9806
-build:
-  cmake: .
-  kconfig: Kconfig
-  settings:
-    dts_root: .
