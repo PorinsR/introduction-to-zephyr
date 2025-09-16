@@ -10,6 +10,9 @@
 #include <zephyr/drivers/mipi_dbi.h>
 #include <zephyr/sys/util.h>
 
+#define ILI9806_PIXEL_FORMAT_RGB565 0U
+#define ILI9806_PIXEL_FORMAT_RGB888 1U
+
 /* Commands/registers. */
 #define ili9806_SWRESET 0x01
 #define ili9806_SLPOUT 0x11
@@ -55,16 +58,19 @@
 /** Reset wait time (ms), ref 15.4 of ili9806 manual. */
 #define ili9806_RESET_WAIT_TIME 5
 
-enum madctl_cmd_set {
-	CMD_SET_1,	/* Default for most of ili9806 display controllers */
-	CMD_SET_2,	/* Used by ILI9342c */
+enum madctl_cmd_set
+{
+	CMD_SET_1, /* Default for most of ili9806 display controllers */
+	CMD_SET_2, /* Used by ILI9342c */
 };
 
-struct ili9806_quirks {
+struct ili9806_quirks
+{
 	enum madctl_cmd_set cmd_set;
 };
 
-struct ili9806_config {
+struct ili9806_config
+{
 	const struct ili9806_quirks *quirks;
 	const struct device *mipi_dev;
 	struct mipi_dbi_config dbi_config;
@@ -79,7 +85,7 @@ struct ili9806_config {
 };
 
 int ili9806_transmit(const struct device *dev, uint8_t cmd,
-		     const void *tx_data, size_t tx_len);
+					 const void *tx_data, size_t tx_len);
 
 /* Commands/registers. */
 #define ILI9806_GAMSET 0x26
@@ -109,7 +115,8 @@ int ili9806_transmit(const struct device *dev, uint8_t cmd,
 #define ILI9806_Y_RES 320U
 
 /** ILI9806 registers to be initialized. */
-struct ili9806_regs {
+struct ili9806_regs
+{
 	uint8_t gamset[ILI9806_GAMSET_LEN];
 	uint8_t frmctr1[ILI9806_FRMCTR1_LEN];
 	uint8_t disctrl[ILI9806_DISCTRL_LEN];
@@ -122,17 +129,17 @@ struct ili9806_regs {
 };
 
 /* Initializer macro for ILI9806 registers. */
-#define ILI9806_REGS_INIT(n)                                                   \
-	static const struct ili9806_regs ili9806_regs_##n = {                  \
-		.gamset = DT_PROP(DT_INST(n, ilitek_ili9806), gamset),         \
-		.frmctr1 = DT_PROP(DT_INST(n, ilitek_ili9806), frmctr1),       \
-		.disctrl = DT_PROP(DT_INST(n, ilitek_ili9806), disctrl),       \
-		.pwctrl1 = DT_PROP(DT_INST(n, ilitek_ili9806), pwctrl1),       \
-		.pwctrl2 = DT_PROP(DT_INST(n, ilitek_ili9806), pwctrl2),       \
-		.vmctrl1 = DT_PROP(DT_INST(n, ilitek_ili9806), vmctrl1),       \
-		.vmctrl2 = DT_PROP(DT_INST(n, ilitek_ili9806), vmctrl2),       \
-		.pgamctrl = DT_PROP(DT_INST(n, ilitek_ili9806), pgamctrl),     \
-		.ngamctrl = DT_PROP(DT_INST(n, ilitek_ili9806), ngamctrl),     \
+#define ILI9806_REGS_INIT(n)                                       \
+	static const struct ili9806_regs ili9806_regs_##n = {          \
+		.gamset = DT_PROP(DT_INST(n, ilitek_ili9806), gamset),     \
+		.frmctr1 = DT_PROP(DT_INST(n, ilitek_ili9806), frmctr1),   \
+		.disctrl = DT_PROP(DT_INST(n, ilitek_ili9806), disctrl),   \
+		.pwctrl1 = DT_PROP(DT_INST(n, ilitek_ili9806), pwctrl1),   \
+		.pwctrl2 = DT_PROP(DT_INST(n, ilitek_ili9806), pwctrl2),   \
+		.vmctrl1 = DT_PROP(DT_INST(n, ilitek_ili9806), vmctrl1),   \
+		.vmctrl2 = DT_PROP(DT_INST(n, ilitek_ili9806), vmctrl2),   \
+		.pgamctrl = DT_PROP(DT_INST(n, ilitek_ili9806), pgamctrl), \
+		.ngamctrl = DT_PROP(DT_INST(n, ilitek_ili9806), ngamctrl), \
 	}
 
 /**
