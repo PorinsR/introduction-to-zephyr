@@ -1,0 +1,9 @@
+config ILI9806
+	bool "ILI9806 display driver"
+	default y
+	depends on DT_HAS_ILITEK_ILI9806_ENABLED
+	select MIPI_DBI
+	select MIPI_DBI_3WIRE
+	select ILI9XXX
+	help
+	  Enable driver for ILI9806 display driver.

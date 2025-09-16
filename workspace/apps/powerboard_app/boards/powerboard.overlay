@@ -4,6 +4,7 @@
 / {
     chosen {
         zephyr,display = &ili9806;
+        // zephyr,display = &ili9340;
     };
     aliases {
         indicator-led = &indicator_led;
@@ -39,6 +40,7 @@
 
     mipi_dbi {
         compatible = "zephyr,mipi-dbi-spi";
+        status = "okay";
         reset-gpios = <&pioc 7 GPIO_ACTIVE_LOW>;
         spi-dev = <&spi0>;
         #address-cells = <1>;
@@ -58,7 +60,7 @@
             status = "okay";
             reg = <0>;
             mipi-max-frequency = <16000000>;
-            mipi-mode = <1>;
+            mipi-mode = "MIPI_DBI_MODE_SPI_3WIRE";
             rotation = <270>;
             width = <800>;
             height = <480>;
