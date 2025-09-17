@@ -70,7 +70,7 @@ int ili9806_transmit(const struct device *dev, uint8_t cmd, const void *tx_data,
 					 size_t tx_len)
 {
 	const struct ili9806_config *config = dev->config;
-
+	printk("Here1");
 	return mipi_dbi_command_write(config->mipi_dev, &config->dbi_config,
 								  cmd, tx_data, tx_len);
 }
@@ -523,7 +523,7 @@ static int ili9806_init(const struct device *dev)
 	}
 
 	ili9806_hw_reset(dev);
-
+	printk("Here0");
 	r = ili9806_transmit(dev, ili9806_SWRESET, NULL, 0);
 	if (r < 0)
 	{

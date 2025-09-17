@@ -9,11 +9,8 @@ description: |
 
 compatible: "ilitek,ili9806"
 
-include:
-  - display-controller.yaml
-  - name: mipi-dbi-spi-device.yaml
-    property-blocklist:
-      - te-delay
+include:  [display-controller.yaml, mipi-dbi-spi-device.yaml]
+
 
 properties:
   pixel-format:
