@@ -604,11 +604,11 @@ static const struct ili9806_quirks ili9488_quirks = {
 		.dbi_config = {                                                 \
 			.mode = DT_STRING_UPPER_TOKEN_OR(                           \
 				INST_DT_ili9806(n, t),                                  \
-				mipi_mode, MIPI_DBI_MODE_SPI_4WIRE),                    \
+				mipi_mode, MIPI_DBI_MODE_SPI_3WIRE),                    \
 			.config = MIPI_DBI_SPI_CONFIG_DT(                           \
 				INST_DT_ili9806(n, t),                                  \
 				SPI_OP_MODE_MASTER |                                    \
-					SPI_WORD_SET(8),                                    \
+					SPI_WORD_SET(9),                                    \
 				0),                                                     \
 		},                                                              \
 		.pixel_format = DT_PROP(INST_DT_ili9806(n, t), pixel_format),   \

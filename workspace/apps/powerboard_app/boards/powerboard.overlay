@@ -1,6 +1,6 @@
 /* https: //docs.zephyrproject.org/latest/build/dts/intro-syntax-structure.html */
 
-#include <dt-bindings/usb-c/pd.h>
+// #include <dt-bindings/usb-c/pd.h>
 / {
     chosen {
         zephyr,display = &ili9806;
@@ -137,8 +137,6 @@
 
     };
 };
-
-&spi0 {};
 
 
 

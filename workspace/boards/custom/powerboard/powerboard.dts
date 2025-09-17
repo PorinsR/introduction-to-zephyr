@@ -91,7 +91,7 @@
 	pinctrl-names = "default";
 
 	cs-gpios = <&pioa 31 GPIO_ACTIVE_LOW>,
-						 <&pioa 30 GPIO_ACTIVE_LOW>;
+			   <&pioa 30 GPIO_ACTIVE_LOW>;
 };
 
 &uart0 {
