@@ -12,7 +12,9 @@
         g-led = &g_led;
         b-led = &b_led;
         display-backlight= &display_backlight;
-        enable12v= &load_switch;
+        enable12v= &power12v_switch;
+        enable3v3= &power3v3_switch;
+        enable-display3v3= &dsp3v3_switch;
         // usbc-port0 = &port0;
     };
 
@@ -33,8 +35,14 @@
         display_backlight: display_backlight{
             gpios = <&pioa 23 GPIO_ACTIVE_LOW>;
         };
-        load_switch: load_switch {
+        dsp3v3_switch: dsp3v3_switch {
+            gpios = <&pioc 26 GPIO_ACTIVE_LOW>;
+        };
+        power12v_switch: power12v_switch {
             gpios = <&pioa 7 GPIO_ACTIVE_HIGH>;
+        };
+        power3v3_switch: power3v3_switch {
+            gpios = <&pioa 19 GPIO_ACTIVE_LOW>;
         };
     };
 
@@ -60,6 +68,9 @@
             status = "okay";
             reg = <0>;
             mipi-max-frequency = <16000000>;
+            // mipi-cpha;
+            mipi-cpol;
+            mipi-hold-cs;
             mipi-mode = "MIPI_DBI_MODE_SPI_3WIRE";
             rotation = <270>;
             width = <800>;

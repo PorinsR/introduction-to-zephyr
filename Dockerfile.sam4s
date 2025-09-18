@@ -76,7 +76,8 @@ RUN apt-get -y update && \
     nano \
     mc \
     openssh-server \
-    usbutils
+    usbutils \
+    openocd
 
 # Set root password
 RUN echo "root:${PASSWORD}" | chpasswd

@@ -7,7 +7,7 @@
             "program": "${input:elfPath}",
             "args": [],
             "stopAtEntry": true,
-            "cwd":  "${workspaceFolder}",
+            "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
             "miDebuggerPath": "/opt/toolchains/zephyr-sdk-0.16.8/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gdb",
             "miDebuggerServerAddress": "host.docker.internal:3333",
@@ -18,6 +18,24 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "Flash + Debug",
+            "runToEntryPoint": "main",
+            "cwd": "${workspaceRoot}",
+            "executable": "./apps/powerboard_app/build/zephyr/zephyr.elf",
+            "armToolchainPath": "../opt/toolchains/zephyr-sdk-0.17.4/arm-zephyr-eabi/bin/",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            //   "svdFile": "./builder/atsam4s2b.svd",
+            "configFiles": [
+                "../opt/toolchains/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/interface/cmsis-dap.cfg",
+                "../opt/toolchains/zephyr-sdk-0.17.4/sysroots/x86_64-pokysdk-linux/usr/share/openocd/scripts/target/at91sam4sXX.cfg"
+            ],
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "interface": "swd",
+            "showDevDebugOutput": "vscode",
         }
     ],
     "inputs": [

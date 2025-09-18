@@ -30,28 +30,53 @@ int main(void)
 
 	const struct device *const fuel_gauge = DEVICE_DT_GET_ONE(maxim_max17262);
 	const struct device *const encoder = DEVICE_DT_GET_ONE(ams_as5600);
-	static const struct gpio_dt_spec display_backlight = GPIO_DT_SPEC_GET(DT_ALIAS(display_backlight), gpios);
-	static const struct gpio_dt_spec load_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable12v), gpios);
+	
 	const struct device *display = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 
-	if (!gpio_is_ready_dt(&load_switch))
+	static const struct gpio_dt_spec display_backlight = GPIO_DT_SPEC_GET(DT_ALIAS(display_backlight), gpios);
+	static const struct gpio_dt_spec power12v_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable12v), gpios);
+	static const struct gpio_dt_spec power3v3_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable3v3), gpios);
+	static const struct gpio_dt_spec power_dsp3v3_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable_display3v3), gpios);
+
+	if (!gpio_is_ready_dt(&power12v_switch))
 	{
 		return 0;
 	}
 
-	ret = gpio_pin_configure_dt(&load_switch, GPIO_OUTPUT_ACTIVE);
+	ret = gpio_pin_configure_dt(&power12v_switch, GPIO_OUTPUT_ACTIVE);
 	if (ret < 0)
 	{
 		return 0;
 	}
-	gpio_pin_set_dt(&load_switch, 1);
+
+	if (!gpio_is_ready_dt(&power3v3_switch))
+	{
+		return 0;
+	}
+
+	ret = gpio_pin_configure_dt(&power3v3_switch, GPIO_OUTPUT_ACTIVE);
+	if (ret < 0)
+	{
+		return 0;
+	}
+
+	if (!gpio_is_ready_dt(&power_dsp3v3_switch))
+	{
+		return 0;
+	}
+
+	ret = gpio_pin_configure_dt(&power_dsp3v3_switch, GPIO_OUTPUT_ACTIVE);
+	if (ret < 0)
+	{
+		return 0;
+	}
 
 	if (!gpio_is_ready_dt(&display_backlight))
 	{
 		return 0;
 	}
 
-	ret = gpio_pin_configure_dt(&display_backlight, GPIO_OUTPUT_ACTIVE);
+	ret = gpio_pin_configure_dt(&display_backlight, 	GPIO_OUTPUT_INACTIVE);
 	if (ret < 0)
 	{
 		return 0;
@@ -129,13 +154,15 @@ int main(void)
 			   voltage.val1, voltage.val2, (double)i_avg,
 			   temperature.val1, temperature.val2);
 
-		ret = gpio_pin_toggle_dt(&display_backlight);
-		if (ret < 0)
-		{
-			return 0;
+		// Update counter label every second
+		count++;
+		if ((count % (1000 / sleep_time_ms)) == 0) {
+				sprintf(buf, "%d", count / (1000 / sleep_time_ms));
+				lv_label_set_text(counter_label, buf);
 		}
 
-		led_state = !led_state;
+		// Must be called periodically
+		lv_task_handler();
 		k_sleep(K_MSEC(sleep_time_ms));
 	}
 	return 0;

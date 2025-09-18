@@ -436,7 +436,7 @@ static int ili9806_configure(const struct device *dev)
 	enum display_orientation orientation;
 
 	/* pixel format */
-	if (config->pixel_format == ILI9806_PIXEL_FORMAT_RGB565)
+	if (config->pixel_format == ILI9806_PIXEL_FORMAT_RGB888)
 	{
 		pixel_format = PIXEL_FORMAT_RGB_565;
 	}
