@@ -11,8 +11,8 @@
 			pinmux = <PA12A_SPI_MISO>,
 			         <PA13A_SPI_MOSI>,
 			         <PA14A_SPI_SPCK>,
-			         <PA31A_SPI_NPCS1>,
-			         <PA30B_SPI_NPCS2>;
+			         <PA11A_SPI_NPCS0>;
+			//  <PA30B_SPI_NPCS2>;
 		};
 	};
 

@@ -33,6 +33,7 @@ int main(void)
 	
 	const struct device *display = DEVICE_DT_GET(DT_CHOSEN(zephyr_display));
 
+	static const struct gpio_dt_spec display_ifsel = GPIO_DT_SPEC_GET(DT_ALIAS(display_ifsel), gpios);
 	static const struct gpio_dt_spec display_backlight = GPIO_DT_SPEC_GET(DT_ALIAS(display_backlight), gpios);
 	static const struct gpio_dt_spec power12v_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable12v), gpios);
 	static const struct gpio_dt_spec power3v3_switch = GPIO_DT_SPEC_GET(DT_ALIAS(enable3v3), gpios);
@@ -55,6 +56,17 @@ int main(void)
 	}
 
 	ret = gpio_pin_configure_dt(&power3v3_switch, GPIO_OUTPUT_ACTIVE);
+	if (ret < 0)
+	{
+		return 0;
+	}
+
+	if (!gpio_is_ready_dt(&display_ifsel))
+	{
+		return 0;
+	}
+
+	ret = gpio_pin_configure_dt(&display_ifsel, GPIO_OUTPUT_ACTIVE);
 	if (ret < 0)
 	{
 		return 0;
@@ -150,9 +162,9 @@ int main(void)
 
 		i_avg = avg_current.val1 + (avg_current.val2 / 1000000.0);
 
-		printk("V: %d.%06d V; I: %f mA; T: %d.%06d °C\n",
-			   voltage.val1, voltage.val2, (double)i_avg,
-			   temperature.val1, temperature.val2);
+		// printk("V: %d.%06d V; I: %f mA; T: %d.%06d °C\n",
+		// 	   voltage.val1, voltage.val2, (double)i_avg,
+		// 	   temperature.val1, temperature.val2);
 
 		// Update counter label every second
 		count++;

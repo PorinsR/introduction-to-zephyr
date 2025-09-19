@@ -15,6 +15,7 @@
         enable12v= &power12v_switch;
         enable3v3= &power3v3_switch;
         enable-display3v3= &dsp3v3_switch;
+        display-ifsel = &dislpay_ifsel;
         // usbc-port0 = &port0;
     };
 
@@ -31,6 +32,9 @@
         };
         b_led: b_led {
             gpios = <&pioc 21 GPIO_ACTIVE_LOW>;
+        };
+        dislpay_ifsel: dislpay_ifsel {
+            gpios = <&pioc 1 GPIO_ACTIVE_LOW>;
         };
         display_backlight: display_backlight{
             gpios = <&pioa 23 GPIO_ACTIVE_LOW>;
@@ -49,28 +53,19 @@
     mipi_dbi {
         compatible = "zephyr,mipi-dbi-spi";
         status = "okay";
-        reset-gpios = <&pioc 7 GPIO_ACTIVE_LOW>;
+        reset-gpios = <&pioc 7 GPIO_ACTIVE_HIGH>;
         spi-dev = <&spi0>;
         #address-cells = <1>;
         #size-cells = <0>;
-        // ili9340: ili9340@0 {
-            //     compatible = "ilitek,ili9340";
-            //     status = "okay";
-            //     reg = <0>;
-            //     mipi-max-frequency = <16000000>;
-            //     mipi-mode = <1>;
-            //     rotation = <270>;
-            //     width = <800>;
-            //     height = <480>;
-        // };
+
         ili9806: ili9806@0 {
             compatible = "ilitek,ili9806";
             status = "okay";
             reg = <0>;
-            mipi-max-frequency = <16000000>;
+            mipi-max-frequency = <12000000>;
             // mipi-cpha;
-            mipi-cpol;
-            mipi-hold-cs;
+            // mipi-cpol;
+            // mipi-hold-cs;
             mipi-mode = "MIPI_DBI_MODE_SPI_3WIRE";
             rotation = <270>;
             width = <800>;
